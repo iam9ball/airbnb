@@ -8,14 +8,14 @@ export default async function ReservationPage() {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    <EmptyState title="Unauthorized" subtitle="Please login" />;
+    return  <EmptyState title="Unauthorized" subtitle="Please login" />;
   }
 
   const reservations = await getReservation({
     authorId: currentUser?.id,
   });
 
-  if (reservations.length === 0) {
+  if (currentUser && reservations.length === 0) {
     return (
       <EmptyState
         title="No reservation found"

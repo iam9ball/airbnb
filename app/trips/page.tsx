@@ -14,7 +14,7 @@ export default async function TripPage() {
     userId: currentUser.id,
   });
 
-  if (reservations.length == 0) {
+  if (currentUser && reservations.length == 0) {
     return (
       <EmptyState
         title="No trips found"
@@ -23,7 +23,10 @@ export default async function TripPage() {
     );
   }
 
-  return <TripClient reservations={reservations} currentUser={currentUser as SafeUser} />;
+  return (
+    <TripClient
+      reservations={reservations}
+      currentUser={currentUser as SafeUser}
+    />
+  );
 }
-
-

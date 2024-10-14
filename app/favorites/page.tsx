@@ -8,7 +8,11 @@ export default async function FavoritePage() {
   const listings = await getFavoriteListing();
   const currentUser = await getCurrentUser();
 
-  if (listings.length === 0) {
+  if (!currentUser) {
+    return <EmptyState title="Unauthorized" subtitle="Please login" />;
+  }
+
+  if (currentUser && listings.length === 0) {
     return (
       <EmptyState
         title="No favorites found"
