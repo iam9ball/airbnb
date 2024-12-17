@@ -12,12 +12,11 @@ import Heading from "../Heading";
 import Input, { RegisterType } from "../Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
-import { ProviderLogin } from "@/app/actions/providerLogin";
-
 import { RegisterSchema } from "@/schema";
 import useVerificationModal from "@/app/hooks/useVerificationModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useUnverifiedUser from "@/app/hooks/useUnverifiedUser";
+import { signIn } from "next-auth/react";
 export default function RegisterModal() {
   const registerModal = useRegisterModal();
   const verificationModal = useVerificationModal();
@@ -124,11 +123,10 @@ export default function RegisterModal() {
         label="Continue with Google"
         icon={FcGoogle}
         onClick={() =>
-          ProviderLogin("google").then((data) => {
-            if (data?.error) {
-              toast.error(data.error);
-            }
-          })
+         signIn("google", {
+          redirectTo: "/"
+         })
+          
         }
       />
       <Button
@@ -136,11 +134,10 @@ export default function RegisterModal() {
         label="Continue with Github"
         icon={AiFillGithub}
         onClick={() =>
-          ProviderLogin("github").then((data) => {
-            if (data?.error) {
-              toast.error(data.error);
-            }
-          })
+         signIn("github", {
+          redirectTo: "/"
+         })
+          
         }
       />
       <div className="text-neutral-500 text-center mt-4 font-light">

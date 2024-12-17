@@ -14,8 +14,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import { Login } from "@/app/actions/login";
 import { User } from "@prisma/client";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
-import { useSession } from "next-auth/react";
-import { ProviderLogin } from "@/app/actions/providerLogin";
+import { signIn, useSession } from "next-auth/react";
 import { LoginSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -90,29 +89,27 @@ export default function LoginModal() {
     <div className="flex flex-col gap-4 mt-3">
       <hr />
       <Button
-        outline
-        label="Continue with Google"
-        icon={FcGoogle}
-        onClick={() =>
-          ProviderLogin("google").then((data) => {
-            if (data?.error) {
-              toast.error(data.error);
-            }
-          })
-        }
-      />
-      <Button
-        outline
-        label="Continue with Github"
-        icon={AiFillGithub}
-        onClick={() =>
-          ProviderLogin("github").then((data) => {
-            if (data?.error) {
-              toast.error(data.error);
-            }
-          })
-        }
-      />
+              outline
+              label="Continue with Google"
+              icon={FcGoogle}
+              onClick={() =>
+               signIn("google", {
+                redirectTo: "/"
+               })
+                
+              }
+            />
+            <Button
+              outline
+              label="Continue with Github"
+              icon={AiFillGithub}
+              onClick={() =>
+               signIn("github", {
+                redirectTo: "/"
+               })
+                
+              }
+            />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="justify-center flex flex-row items-center gap-2">
           <div className="">Dont have an account?</div>
